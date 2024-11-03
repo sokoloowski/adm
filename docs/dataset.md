@@ -43,6 +43,7 @@ Każdy z wpisów zawiera 22 wartości określających takie właściwości jak:
 
 - czas dodania,
 - autora,
+- pełnioną przez autora funkcję (distinguished),
 - wątek odpowiedzi,
 - wątek tematyczny,
 - treść,
@@ -55,4 +56,33 @@ Finalnie w naszej bazie znalazło się 1 393 016 403 rekordów.
 
 ![comments_count](dataset/comments_count.png)
 
-Z pobieżnej analizy wynika, że niektóre pola nie są w ogóle używane (`downs`)
+Z pobieżnej analizy wynika, że niektóre kolumny nie są w ogóle używane:
+
+- `ups` - wszystkie wartości są równe `score`,
+- `downs` - wszystkie wartości to `0`,
+- `removal_reason` - wszystkie wartości to `null`.
+
+inne kolumny są używane rzadko i mają mały wpływ na nasze analizy:
+
+- `parent_id` - wskazujący na post nadrzędny,
+- `created_utc` - czas dodania wpisu,
+- `distinguished` - funkcja autora (np. moderator),
+- `subreddit_id` - identyfikator wątku tematycznego,
+- `id` - identyfikator wpisu,
+- `archived` - czy wątek jest zarchiwizowany,
+- `link_id` - identyfikator wątku odpowiedzi,
+- `score_hidden` - czy liczba polubień jest ukryta,
+- `author_flair_text` - tekst odznaki autora,
+- `author_flair_css_class` - klasa CSS odznaki autora,
+- `name` - identyfikator wpisu w formacie `tX_<id>`,
+- `retrieved_on` - czas pobrania wpisu,
+- `edited` - czy i kiedy wpis był edytowany.
+
+Pozostają zatem następujące kolumny:
+
+- `controversiality` - czy wpis jest kontrowersyjny,
+- `score` - liczba polubień,
+- `author` - autor wpisu,
+- `body` - treść wpisu,
+- `gilded` - liczba złotych odznak autora,
+- `subreddit` - wątek tematyczny.
