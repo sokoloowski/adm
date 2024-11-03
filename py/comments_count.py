@@ -1,71 +1,74 @@
 # %%
-import psycopg2
-
-db = psycopg2.connect(
-    dbname="adm",
-    user="postgres",
-    password="adm",
-    host="10.10.10.10",
-    port="5432"
-)
-db.autocommit = True
-
-# %%
-query = """
-SELECT
-    DATE_TRUNC('month', created_utc) AS year_month,
-    COUNT(created_utc) AS row_count
-FROM
-    reddit
-GROUP BY
-    DATE_TRUNC('month', created_utc)
-ORDER BY
-    year_month;
-"""
-
-# %%
-with db.cursor() as cursor:
-    cursor.execute(query)
-    data = cursor.fetchall()
-
-# %%
 import pandas as pd
-
-df = pd.DataFrame(data, columns=['year_month', 'count'])
-df['year'] = df['year_month'].dt.year
-df['month'] = df['year_month'].dt.month
-df = df.drop(columns=['year_month'])
-df.head()
-
-# %%
 import matplotlib.pyplot as plt
 
-df = df[df['year'] < 2015]
-df['date'] = df['month'].map(str) + '-' + df['year'].map(str)
-df['date'] = pd.to_datetime(df['date'], format='%m-%Y')
-plt.figure(figsize=(16, 9))
-plt.ticklabel_format(useOffset=False, style='plain')
-plt.plot(df['date'], df['count'])
-plt.xlabel('Date')
-plt.xticks(rotation=45)
-plt.ylabel('Number of comments')
-plt.savefig('comments_count.png')
-plt.show()
+# %%
+def load_count(filepath: str) -> pd.DataFrame:
+    _df = pd.read_csv(filepath)
+    _df['year_month'] = _df.apply(lambda x: pd.to_datetime(x['year_month'], format='%Y-%m-%d %H:%M:%S'), axis=1)
+    return _df
+
+
+def plot_count(dataframes: list[pd.DataFrame], legend=None, out="comments_count.png") -> None:
+    plt.figure(figsize=(16, 9))
+    plt.ticklabel_format(useOffset=False, style='plain')
+    for _df in dataframes:
+        plt.plot(_df['year_month'], _df['row_count'])
+    plt.legend(legend)
+    plt.xlabel('Date')
+    plt.xticks(rotation=45)
+    plt.ylabel('Number of comments')
+    if out:
+        plt.savefig(out)
+    plt.show()
+
+
+def plot_increase(dataframes: list[pd.DataFrame], legend=None, out="comments_increase.png") -> None:
+    plt.figure(figsize=(16, 9))
+    plt.ticklabel_format(useOffset=False, style='plain')
+    for _df in dataframes:
+        plt.plot(_df['year_month'], _df['row_count'] / _df['row_count'].max())
+    plt.legend(legend)
+    plt.xlabel('Date')
+    plt.xticks(rotation=45)
+    plt.ylabel('Increase in comments')
+    if out:
+        plt.savefig(out)
+    plt.show()
+
+
+def plot_count_by_year(dataframes: list[pd.DataFrame], legend=None, out="comments_count_by_year.png") -> None:
+    plt.figure(figsize=(16, 9))
+    plt.ticklabel_format(useOffset=False, style='plain')
+    for _df in dataframes:
+        _d = _df.groupby(_df['year_month'].dt.year).sum(True)
+        plt.bar(_d.index, _d['row_count'])
+    plt.legend(legend)
+    plt.xlabel('Date')
+    plt.ylabel('Number of comments')
+    if out:
+        plt.savefig(out)
+    plt.show()
 
 # %%
-df.groupby('year').sum('count')['count']
+df_orig = load_count('csv/comments_count_orig.csv')
+df_delete_deleted = load_count('csv/comments_count_1.csv')
+df_select_longer_than_1000 = load_count('csv/comments_count_2.csv')
 
 # %%
-plt.figure(figsize=(16, 9))
-plt.ticklabel_format(useOffset=False, style='plain')
-plt.bar(df.groupby('year').sum('count').index, df.groupby('year').sum('count')['count'])
-plt.xlabel('Date')
-plt.ylabel('Number of comments')
-plt.savefig('comments_count_agg.png')
-plt.show()
+plot_count([df_orig, df_delete_deleted, df_select_longer_than_1000],
+           legend=["Original", "DELETE FROM reddit WHERE body = '[deleted]'",
+                   "SELECT INTO cleared FROM reddit WHERE length(body) > 1000"])
 
 # %%
-df[['count']].sum()
+plot_increase([df_orig, df_delete_deleted, df_select_longer_than_1000],
+              legend=["Original", "DELETE FROM reddit WHERE body = '[deleted]'",
+                      "SELECT INTO cleared FROM reddit WHERE length(body) > 1000"])
 
 # %%
-db.close()
+plot_count_by_year([df_orig, df_delete_deleted, df_select_longer_than_1000],
+                   legend=["Original", "DELETE FROM reddit WHERE body = '[deleted]'",
+                           "SELECT INTO cleared FROM reddit WHERE length(body) > 1000"])
+
+# %%
+df_select_longer_than_1000['row_count'].sum() / df_orig['row_count'].sum()
