@@ -8,3 +8,4 @@ __pycache__/
 /consoles/uknowmee/
 
 reddit_data/
+*.pkl

@@ -7,3 +7,14 @@
 ---
 
 ## Advanced data mining...
+
+1. Data acquisition (text data)
+2. Data cleaning
+3. Feature generation
+4. Model(s) training
+5. Results analysis
+6. Final report preparation
+
+```bash
+sudo apt install python3-{icu,numpy,psycopg2} libicu-dev
+```
