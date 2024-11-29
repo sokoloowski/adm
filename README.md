@@ -16,5 +16,6 @@
 6. Final report preparation
 
 ```bash
-sudo apt install python3-{icu,numpy,psycopg2} libicu-dev
+# for psql connection
+sudo apt install python3-psycopg2
 ```
