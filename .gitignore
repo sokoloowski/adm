@@ -9,3 +9,6 @@ __pycache__/
 
 reddit_data/
 *.pkl
+
+/report/out/
+/report/output*
