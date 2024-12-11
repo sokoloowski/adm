@@ -1,3 +1,3 @@
-### Clustering Conclusions
+### Conclusions
 
 We made several attempts to cluster our data, operating under the assumption that data from different subreddits should exhibit meaningful differences across categories. However, the results were unsatisfactory, with all silhouette scores for the identified clusters being close to 0, indicating poor cluster quality. Due to these disappointing outcomes, we decided to shift our approach to classification, which is detailed in the next section.
