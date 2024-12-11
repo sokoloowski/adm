@@ -4,4 +4,4 @@ Classification is a supervised learning technique that is used to predict the ca
 
 There are many different classification algorithms, each with its own strengths and weaknesses. Some of the most popular classification algorithms include logistic regression, decision trees, and support vector machines.
 
-Poniżej przedstawiamy analizę pięciu klasyfikatorów dostępnych w bibliotece Scikit Learn, które przetestowaliśmy pod kątem dostępnych funkcji straty.
+The following section presents an analysis of the five classifiers available in the Scikit Learn library, which were tested against the available loss functions.
