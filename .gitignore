@@ -12,3 +12,5 @@ reddit_data/
 
 /report/out/
 /report/output*
+/mining/data/*
+!.gitkeep
