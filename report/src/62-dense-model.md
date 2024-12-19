@@ -13,7 +13,7 @@ Key Features of Word2Vec:
 
 2. Semantic Representation:  
    The embeddings learned by Word2Vec encode semantic relationships, such as:  
-   - Analogies (e.g., "king - man + woman ≈ queen").  
+   - Analogies (e.g., "king - man + woman $\approx$ queen").  
    - Synonymy (e.g., "fast" and "quick" will have similar vector representations).  
 
 3. Training Process:  
@@ -22,7 +22,7 @@ Key Features of Word2Vec:
 4. Efficiency:  
    Word2Vec is highly efficient and can process large datasets to learn high-quality embeddings in relatively short periods.
 
-To ensure we have well trained embedding we used Word2Vec trained on Google-News-300.
+To ensure we have well trained embedding we used Word2Vec trained on `Google-News-300`.
 
 ### Model architecture
 
@@ -45,12 +45,12 @@ As the basic model we tested classical dense model presented below.
 
 : Dense model summary {#tbl:dense-model-summary}
 
+![Dense model's learning curve](images/dense_accuracy.png){#fig:dense-learning-curve width=60%}
+
 ### Results
 
-This quite simple architecture allowed us to achieve results at the level of the best classifiers tested previously. The learing curve seems very good with its smooth raising learning curve and model didn't show clues (in loss) to suspect overfitting.
+This quite simple architecture allowed us to achieve results at the level of the best classifiers tested previously. The learning curve shown in [@fig:dense-learning-curve] seems very good with its smooth raising and model didn't show clues (in loss) to suspect overfitting. The confusion matrix presented in [@fig:dense-confusion-matrix] shows that the model is able to classify the texts of Reddit posts with high accuracy. The ROC curve in [@fig:dense-roc] also confirms the good performance of the classifier.
 
-![Dense model's learning curve](images/dense_accuracy.png){#fig:dense-learning-curve widh=80%}
+![For dense model, results seem to be better than in Scikit Learn approach](images/dense_confusion_matrix.png){#fig:dense-confusion-matrix width=100%}
 
-![For dense model, results seem to be better than in Scikit Learn approach](images/dense_confusion_matrix.png){#fig:dense-confusion-matrix widh=80%}
-
-![While ROC curve of `gaming` class is improved, results for `technology` class are still poor](images/roc_dense.png){#fig:dense-roc widh=80%}
+![While ROC curve of `gaming` class is improved, results for `technology` class are still poor.](images/roc_dense.png){#fig:dense-roc width=50%}
