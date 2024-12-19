@@ -1,4 +1,4 @@
-## Preprocessing
+## Preprocessing {#sec:preprocessing}
 
 Following the initial data filtering stage, we proceeded to process the data. The preparation of data for analysis represents a pivotal stage in the data mining process. In this instance, we elected to utilise a range of data processing techniques with a view to achieving optimal results for subsequent analysis.
 
@@ -115,10 +115,8 @@ The preprocessing stage has resulted in the elimination of unnatural strings fro
 
 ![The least popular words in the dataset following preprocessing are illustrated in the accompanying chart, which serves to demonstrate that the dataset still contains a considerable amount of erroneous data.](images/top_words_preprocessed_least.png){#fig:top-words-preprocessed-least}
 
-To address this issue, we opted to eliminate words that are not present in the Brown Corpus. A subsequent examination of the rarest words revealed that our dataset had been effectively cleansed, as evidenced by the [@fig:top-words-removed-nonwords-least].
+To circumvent this issue, we opted to eliminate words that are not present in the Brown Corpus. An analysis of the least frequent words revealed that the dataset had been effectively cleaned up. However, in the process, a number of crucial words, including the proper names of technology, were inadvertently removed. This highlighted the need for an alternative approach to preserve the specialised vocabulary. Consequently, the decision was taken to reduce the number of words to 10,000, which not only enhanced the quality of the data but also allowed for the retention of non-word strings within the dataset.
 
-![The least frequent words in the dataset, following the removal of non-words, are presented herewith. The dataset is now devoid of superfluous data.](images/top_words_removed_nonwords_least.png){#fig:top-words-removed-nonwords-least}
-
-Following the preprocessing stage, a notable alteration was observed in the histogram of the length of the entries, as illustrated in [@fig:post-length-removed-nonwords]. The most common post length is now approximately 700 characters, which represents a notable reduction from the initial 1,000 characters. This change is indicative of the removal of superfluous words and the elimination of non-English entries.
+Following the preprocessing stage, a notable alteration was observed in the histogram of the length of the entries, as illustrated in [@fig:post-length-removed-nonwords]. The most common post length is now approximately 700 characters, which represents a notable reduction from the initial 1,000 characters.
 
 ![Post length distribution after removing non-words. The most common post length is around 700 characters.](images/post_length_removed_nonwords.png){#fig:post-length-removed-nonwords width=80%}
