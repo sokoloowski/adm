@@ -14,3 +14,5 @@ reddit_data/
 /report/output*
 /mining/data/*
 !.gitkeep
+
+*.tsv
