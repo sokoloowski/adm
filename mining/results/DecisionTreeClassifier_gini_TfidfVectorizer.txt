@@ -1,0 +1,11 @@
+              precision    recall  f1-score   support
+
+      gaming       0.71      0.70      0.70      1033
+    politics       0.51      0.53      0.52       976
+ programming       0.62      0.60      0.61       992
+     science       0.54      0.57      0.55       994
+  technology       0.41      0.40      0.40       989
+
+    accuracy                           0.56      4984
+   macro avg       0.56      0.56      0.56      4984
+weighted avg       0.56      0.56      0.56      4984

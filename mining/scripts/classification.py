@@ -54,6 +54,7 @@ def train_analyze(classifier, vectorizer, dataframe, random_state=None) -> None:
         plt.legend()
         plt.title(f'ROC curve for {classifier.__class__.__name__} with {param} on {vectorizer_name}')
         plt.gca().set_aspect('equal')
+        plt.savefig(f'images/roc_{classifier_name}_{param}_{vectorizer_name}.png', bbox_inches='tight')
         plt.show()
     except:
         classifier.fit(X_train, y_train)
@@ -70,12 +71,15 @@ def train_analyze(classifier, vectorizer, dataframe, random_state=None) -> None:
 
     print(f'Classification report for {classifier_name} with {param} on {vectorizer_name}:')
     print(classification_report(y_test, y_pred, target_names=labels))
+    with open(f'results/{classifier_name}_{param}_{vectorizer_name}.txt', 'w') as f:
+        f.write(classification_report(y_test, y_pred, target_names=labels))
     cm = confusion_matrix(y_test, y_pred)
     plt.figure(figsize=(16, 9))
     sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
                 xticklabels=labels, yticklabels=labels)
     acc = round(accuracy_score(y_test, y_pred) * 100, 2)
     plt.title(f'Confusion matrix for {classifier_name} with {param} on {vectorizer_name} with {acc}% accuracy')
+    plt.savefig(f'images/confusion_matrix_{classifier_name}_{param}_{vectorizer_name}.png', bbox_inches='tight')
     plt.show()
 
     # Collect garbage
