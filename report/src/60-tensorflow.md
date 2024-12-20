@@ -1,1 +1,1 @@
-# Yet another approach to model selection and training
+# Yet Another Approach to Model Selection and Training

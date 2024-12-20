@@ -1,12 +1,12 @@
 ## LSTM Model
 
-### Utilizing sequentail nature of data
+### Utilizing Sequential Nature of Data
 
-The biggest drawback of dense model is that it is not the best solution to utilize sequentiality. To adress this challenge we applied recurrent layers, more accurately speaking LSTM. Since in text there are some so called two ways words dependencies we applied Biderectional-LSTM. This type of layer provide capability of taking into account as well local and more global (learned in the past) patterns in data.
+The biggest drawback of the dense model is that it is not the best solution for utilizing sequentiality. To address this challenge, we applied recurrent layers—more specifically, LSTM. Since text data often contains two-way word dependencies, we applied Bidirectional LSTM. This type of layer provides the capability to take into account both local and more global (learned in the past) patterns in the data.
 
-### Model architecture
+### Model Architecture
 
-However computational requirements of such models require a lot of resources. Because of that we needed to use more powerful machine and GPU acceleration. We trained and evaluted the model using NVIDIA GeForce RTX 3090 with 24GB GPU memory. It allowed for training such model 30x faster (from 30 minutes per epoch to 1 minute).
+However, the computational requirements of such models are high and require significant resources. Because of that, we needed to use a more powerful machine with GPU acceleration. We trained and evaluated the model using an NVIDIA GeForce RTX 3090 with 24GB of GPU memory. This setup allowed for training the model 30x faster (from 30 minutes per epoch to 1 minute).
 
 | Layer (type)             | Output Shape      | Param #    |
 | :----------------------- | :---------------- | :--------- |
@@ -27,7 +27,7 @@ However computational requirements of such models require a lot of resources. Be
 
 ### Results
 
-Achieved results were better than all previous ones, but only by few percent. However this problem can depend on the quality of the data and will be further and wider discussed on the summarization chapter. Learning curve was't so smooth this time, and model showed signs of overfitting after first 30 epochs.
+The achieved results were better than all previous ones, but only by a few percent. However, this issue can depend on the quality of the data and will be further discussed in the summarization chapter. The learning curve wasn't as smooth this time, and the model showed signs of overfitting after the first 30 epochs.
 
 ![While the learning curve is not as elegant as that observed in [@fig:dense-learning-curve], it nevertheless demonstrates potential.](images/lstm_accuracy.png){#fig:lstm-learning-curve width=60%}
 

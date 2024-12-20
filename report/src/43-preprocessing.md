@@ -1,12 +1,16 @@
 ## Preprocessing {#sec:preprocessing}
 
-Following the initial data filtering stage, we proceeded to process the data. The preparation of data for analysis represents a pivotal stage in the data mining process. In this instance, we elected to utilise a range of data processing techniques with a view to achieving optimal results for subsequent analysis.
+After the initial data filtering, we proceeded with the preprocessing stage, which is crucial in preparing the data for further analysis. In this phase, we employed various data processing techniques to optimize the dataset for subsequent analysis.
 
-The data was preprocessed in Python using the Pandas library for data manipulation [@reback2020pandas]. This facilitated the straightforward loading of data from a Postgres database, convenient processing and filtering, and the saving of the current progress to pickle files.
+The data preprocessing was carried out in Python using the Pandas library for data manipulation [@reback2020pandas]. Pandas allowed for easy loading of data from the PostgreSQL database, efficient processing and filtering, and saving intermediate results to pickle files.
 
-The initial processing stage involved the removal of duplicate rows, which could otherwise introduce errors into the subsequent analysis. Rows with identical values in both the `body` and `subreddit` columns were identified as duplicates. The `drop_duplicates` method was employed to address this issue, and the resulting analysis demonstrated that duplicates accounted for a mere 0.48% of the total rows.
+### Removing Duplicates
 
-The subsequent phase of the process entailed balancing and reducing the dataset. In this instance, the Pandas library was again leveraged, specifically the `sample` method, which permitted the selection of an equal number of rows for each category, as illustrated in [@lst:reduce-dataset]. This approach resulted in a dataset comprising 20,000 rows, thereby facilitating more expedient analysis.
+The first step in the preprocessing pipeline was to remove duplicate rows, which could distort the analysis. Rows with identical values in both the `body` and `subreddit` columns were considered duplicates. We used the `drop_duplicates` method to address this issue, and the analysis revealed that duplicates represented only 0.48% of the total dataset.
+
+### Balancing and Reducing the Dataset
+
+Next, we focused on balancing and reducing the dataset size. The `sample` method from Pandas was used to ensure an equal number of rows for each subreddit, as illustrated in [@lst:reduce-dataset]. The resulting dataset, comprising 20,000 rows, was better suited for more efficient analysis.
 
 ```python
 import pandas as pd
@@ -25,20 +29,21 @@ df = pd.concat(subreddit_dfs).reset_index(drop=True)
 
 : Reducing and balancing the dataset {#lst:reduce-dataset}
 
-The subsequent phase of the investigation entailed the examination of the most prevalent lexical items within the dataset. To this end, the `CountVectorizer` from the Scikit Learn library [@sklearn2011] was employed, enabling the enumeration of word occurrences within the `body` column. The results of this analysis are presented in [@fig:top-words-initial]. Furthermore, an analysis of the length of the entries was conducted, which facilitated a more comprehensive understanding of the data structure. The results of this analysis are presented in [@fig:post-length-initial].
+### Lexical Analysis
 
-![Most popular words in the dataset. The most popular word is `gt`, coming from `&gt;` string, which is an HTML entity for `>` char, often used to mark a citation.](images/top_words_initial.png){#fig:top-words-initial}
+After balancing the dataset, we analyzed the most frequent lexical items in the `body` column using the `CountVectorizer` from the Scikit Learn library [@sklearn2011]. This helped us understand the common terms used in the dataset, as shown in [@fig:top-words-initial]. We also analyzed the length distribution of the posts, which revealed that most posts were around 1,000 characters long, as illustrated in [@fig:post-length-initial].
 
-Furthermore, the distribution of entry lengths within the dataset was examined. As illustrated in [@fig:post-length-initial], the most prevalent entries are approximately 1,000 characters in length, and the graph displays a hyperbolic shape.
+![Most popular words in the dataset. The most frequent word is `gt`, derived from the HTML entity `&gt;`, commonly used to mark citations.](images/top_words_initial.png){#fig:top-words-initial}
 
-![Initial post length distribution. The most common post length is around 1,000 characters.](images/post_length_initial.png){#fig:post-length-initial width=80%}
+![Initial post length distribution, showing a prevalence of posts around 1,000 characters.](images/post_length_initial.png){#fig:post-length-initial width=80%}
 
-Following this analysis, it became evident that the necessary steps for processing the text included decoding special characters, removing stopwords and performing text lemmatisation. To facilitate the aforementioned operations, all lines written in a language other than English were removed from the collection. At the outset, the `langdetect` library was employed, which employs a non-deterministic approach to ascertain the language of the text in question. However, concerns were raised regarding the quality of the results. Consequently, an in-house function was developed based on the NLTK library [@bird2009natural] to address this issue. The function, presented in [@lst:detect-language], was designed to perform this task. It was decided that the occurrence of stopwords in each language should be checked and the highest one selected, thus enabling the language of the text to be determined with greater precision. Furthermore, our function proved to be slightly faster than the `langdetect` library, which is advantageous when processing large datasets. Following this optimisation and the application of dictionary comprehension, a more readable implementation of the function is presented in this article. After this operation, the collection decreased by 0.34%, and the language distribution is shown in [@fig:language-distribution].
+### Text Cleaning
+
+The next step involved decoding special characters, removing stopwords, and performing lemmatization. Initially, we used the `langdetect` library to filter out non-English entries. However, the results were not always accurate, so we developed an in-house solution using the NLTK library [@bird2009natural]. Our custom function, presented in [@lst:detect-language], checks the occurrence of stopwords in various languages and selects the most likely language based on the highest match count. This method proved to be slightly faster than `langdetect`, which was advantageous for large datasets. After applying this function, the dataset shrank by 0.34%, and the language distribution is shown in [@fig:language-distribution].
 
 ```python
 import nltk
 from nltk.corpus import stopwords
-
 
 def detect_language(text: str):
   text = text.lower()
@@ -47,7 +52,7 @@ def detect_language(text: str):
 
   for lang in stopwords.fileids():
     if lang == 'hinglish':
-      # Skip Hinglish, which include both
+      # Skip Hinglish, which includes both
       # Hindi and English stopwords
       continue
     common = words_set.intersection(stopwords.words(lang))
@@ -56,15 +61,21 @@ def detect_language(text: str):
   return max(occurences, key=occurences.get)
 ```
 
-: Detecting language of the text using NLTK and stopwords {#lst:detect-language}
+: Detecting the language of the text using NLTK and stopwords {#lst:detect-language}
 
-![Language distribution in the dataset. The most common language is English, followed by Arabic and Catalan.](images/language_distribution.png){#fig:language-distribution width=80%}
+![Language distribution in the dataset. The majority of the entries are in English, followed by Arabic and Catalan.](images/language_distribution.png){#fig:language-distribution width=80%}
 
-Following the removal of non-English entries, the dataset is no longer perfectly balanced. However, the resulting differences between classes, as illustrated in [@fig:subreddit-distribution], are sufficiently minor that they will not significantly impact the analysis results.
+### Text Preprocessing
 
-![Distribution of subreddits in the dataset. The dataset is not perfectly balanced, but the differences between classes are small.](images/subreddit_distribution.png){#fig:subreddit-distribution width=80%}
+After removing non-English entries, we proceeded with decoding special characters, removing stopwords, and lemmatizing the text. These operations were carried out using NLTK, and the `preprocessing` function, shown in [@lst:preprocessing], was applied to clean and process the data. This function performs several tasks:
 
-In the subsequent phase of the process, we undertook the decoding of special characters, the removal of stopwords and the lemmatisation of the text. To achieve this, we once again utilised the NLTK library, which enabled us to complete these tasks in an efficient manner. To accomplish this, we developed the function presented in [@lst:preprocessing], which we then applied to our dataset via the `apply` method. The outcome of these operations is a dataset that is now suitable for further analysis.
+- Removing URLs and unescaping HTML entities
+- Removing stopwords
+- Tokenizing the text
+- Lemmatizing the tokens based on their part of speech
+- Removing non-alphabetic characters
+
+The result of these operations is a cleaned dataset suitable for further analysis.
 
 ```python
 import nltk
@@ -74,7 +85,7 @@ from nltk.stem import WordNetLemmatizer
 def preprocessing(text: str) -> str:
   sw: list = stopwords.words('english')
   lemmatizer = WordNetLemmatizer()
-  pos_dict={'NOUN': 'n', 'VERB': 'v', 'ADJ': 'a', 'ADV': 'r'}
+  pos_dict = {'NOUN': 'n', 'VERB': 'v', 'ADJ': 'a', 'ADV': 'r'}
 
   # Initial cleaning: remove URLs, unescape HTML entities
   text = unescape(re.sub(r"http(s?)://\S+", '', text.lower()))
@@ -107,16 +118,18 @@ def preprocessing(text: str) -> str:
   return ' '.join(text)
 ```
 
-: Function, which preprocesses the text data {#lst:preprocessing}
+: Preprocessing function for text data {#lst:preprocessing}
 
-The preprocessing stage has resulted in the elimination of unnatural strings from the list of the most frequently occurring words, as illustrated in [@fig:top-words-preprocessed]. It is evident that the most prevalent words are now those that are genuinely found in the English lexicon. However, it is also important to consider the least frequent words. As illustrated in [@fig:top-words-preprocessed-least], our dataset still comprises a considerable number of superfluous words that contribute no meaningful information, such as `abab` or `zoooombiiiiiiiieeee`.
+### Results of Preprocessing
 
-![Most popular words in the dataset after preprocessing. The most popular word is `people`, followed by `make` and `like`.](images/top_words_preprocessed.png){#fig:top-words-preprocessed}
+The preprocessing stage significantly cleaned the dataset, as evidenced by the change in the list of most frequent words. After preprocessing, the most common words in the dataset were typical English words like `people`, `make`, and `like`, as shown in [@fig:top-words-preprocessed]. However, we also noticed some unwanted, non-lexical words like `abab` and `zoooombiiiiiiiieeee`, which had not been properly filtered out.
 
-![The least popular words in the dataset following preprocessing are illustrated in the accompanying chart, which serves to demonstrate that the dataset still contains a considerable amount of erroneous data.](images/top_words_preprocessed_least.png){#fig:top-words-preprocessed-least}
+![Most popular words in the dataset after preprocessing. Common words such as `people`, `make`, and `like` now dominate.](images/top_words_preprocessed.png){#fig:top-words-preprocessed}
 
-To circumvent this issue, we opted to eliminate words that are not present in the Brown Corpus. An analysis of the least frequent words revealed that the dataset had been effectively cleaned up. However, in the process, a number of crucial words, including the proper names of technology, were inadvertently removed. This highlighted the need for an alternative approach to preserve the specialised vocabulary. Consequently, the decision was taken to reduce the number of words to 10,000, which not only enhanced the quality of the data but also allowed for the retention of non-word strings within the dataset.
+![Least popular words after preprocessing, illustrating some erroneous terms still present in the dataset.](images/top_words_preprocessed_least.png){#fig:top-words-preprocessed-least}
 
-Following the preprocessing stage, a notable alteration was observed in the histogram of the length of the entries, as illustrated in [@fig:post-length-removed-nonwords]. The most common post length is now approximately 700 characters, which represents a notable reduction from the initial 1,000 characters.
+To address this, we eliminated words that were not present in the Brown Corpus, which significantly cleaned up the dataset. However, some important specialized terms, such as technology-related proper names, were inadvertently removed. To balance between cleaning and preserving important vocabulary, we decided to limit the dataset to the top 10,000 most frequent words, which improved the quality of the data while retaining essential terms.
 
-![Post length distribution after removing non-words. The most common post length is around 700 characters.](images/post_length_removed_nonwords.png){#fig:post-length-removed-nonwords width=80%}
+After this final step, we observed a shift in the distribution of post lengths. The most common post length dropped to around 700 characters, down from the initial 1,000 characters, as shown in [@fig:post-length-removed-nonwords].
+
+![Post length distribution after removing non-words. The most common post length is now around 700 characters.](images/post_length_removed_nonwords.png){#fig:post-length-removed-nonwords width=80%}

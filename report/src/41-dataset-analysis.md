@@ -1,41 +1,41 @@
-## Dataset analysis {#sec:dataset-analysis}
+## Dataset Analysis {#sec:dataset-analysis}
 
-The dataset contains comments from Reddit, which are stored in a JSON format. Each entry contains 22 values that describe properties such as:
+The dataset contains Reddit comments, stored in JSON format. Each entry consists of 22 values that describe properties such as:
 
 - the time of creation,
 - the author,
-- the author's distinguished function,
+- the author's role (e.g., moderator),
 - the reply thread,
 - the thematic thread,
 - the content,
-- the number of likes,
+- the number of upvotes,
 - the time of editing.
 
-A cursory analysis shows that some columns are not used at all: every value from the `ups` column is equal to `score`, every value from the `downs` column is equal to `0`, and every value from the `removal_reason` column is equal to `null`.
+A cursory analysis reveals that some columns are not used at all: every value in the `ups` column is equal to the `score`, every value in the `downs` column is `0`, and every value in the `removal_reason` column is `null`.
 
-Other columns include information about:
+Other columns provide information about:
 
-- `parent_id` - indicating the parent post,
+- `parent_id` - the parent post ID,
 - `created_utc` - the time when the post was added,
-- `distinguished` - author function (e.g. moderator),
-- `subreddit_id` - subject thread identifier,
-- `id` - identifier of the entry,
+- `distinguished` - the author's role (e.g., moderator),
+- `subreddit_id` - the subreddit identifier,
+- `id` - the entry identifier,
 - `archived` - whether the thread is archived,
-- `link_id` - identifier of the reply thread,
-- `score_hidden` - whether the number of likes is hidden,
+- `link_id` - the reply thread identifier,
+- `score_hidden` - whether the number of upvotes is hidden,
 - `author_flair_text` - the text of the author's badge,
-- `author_flair_css_class` - CSS class of author badge,
-- `name` - entry identifier in `tX_<id>` format,
+- `author_flair_css_class` - the CSS class for the author's badge,
+- `name` - entry identifier in the `tX_<id>` format,
 - `retrieved_on` - the time when the entry was retrieved,
 - `edited` - whether and when the entry was edited.
 
-This leaves the following columns:
+This leaves the following useful columns:
 
-- `controversiality` - whether the entry is controversial,
-- `score` - the number of likes,
+- `controversiality` - whether the entry is considered controversial,
+- `score` - the number of upvotes,
 - `author` - the author of the entry,
 - `body` - the content of the entry,
-- `gilded` - number of gold badges of the author,
-- `subreddit` - topic thread.
+- `gilded` - the number of gold badges the author has received,
+- `subreddit` - the topic or thread of discussion.
 
-With an idea of the meaning of each column, we can start cleaning the dataset. We started by removing the redundant 3 columns, that is, `ups`, `downs` and `removal_reason`.
+With an understanding of each column's meaning, we began the process of cleaning the dataset. We started by removing the redundant columns: `ups`, `downs`, and `removal_reason`.

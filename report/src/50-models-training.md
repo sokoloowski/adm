@@ -1,1 +1,1 @@
-# Model selection and training {#sec:models-training}
+# Model Selection and Training {#sec:models-training}

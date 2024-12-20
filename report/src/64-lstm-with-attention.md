@@ -1,24 +1,24 @@
-## LSTM with attention Model
+## LSTM with Attention Model
 
 ### Enhancing LSTM with Attention
 
-While LSTMs are powerful in capturing dependencies over sequences, they may struggle to effectively focus on the most relevant parts of the input, particularly for longer sequences. To overcome this limitation, attention mechanisms are integrated with LSTMs. The attention mechanism allows the model to dynamically assign importance (weights) to different parts of the input sequence based on their relevance to the task at hand. 
+While LSTMs are powerful in capturing dependencies over sequences, they may struggle to effectively focus on the most relevant parts of the input, particularly for longer sequences. To overcome this limitation, attention mechanisms are integrated with LSTMs. The attention mechanism allows the model to dynamically assign importance (weights) to different parts of the input sequence based on their relevance to the task at hand.
 
 ### Key Features of LSTM with Attention:
 
-1. Selective Focus:  
+1. **Selective Focus:**  
    Attention enables the model to "attend" to specific parts of the input sequence rather than treating all parts equally. This is particularly useful in cases where certain parts of the input carry more significance than others.
 
-2. Contextual Representation:  
+2. **Contextual Representation:**  
    By computing a weighted sum of the hidden states of the LSTM, the attention mechanism provides a richer, context-aware representation of the input.
 
-3. Scalability to Longer Sequences:  
+3. **Scalability to Longer Sequences:**  
    Attention mitigates the challenge of forgetting or diluting information in longer sequences, a common issue in vanilla LSTM models.
 
-4. Learned Relevance:  
+4. **Learned Relevance:**  
    The attention weights are learned during training, allowing the model to automatically determine which parts of the sequence are most important for a given task.
 
-### Model architecture
+### Model Architecture
 
 | Layer (type)             | Output Shape      | Param #   |
 | :----------------------- | :---------------- | :-------- |
@@ -44,7 +44,7 @@ While LSTMs are powerful in capturing dependencies over sequences, they may stru
 
 ### Results
 
-The implementation of an attention mechanism yielded enhanced outcomes; however, this enhancement did not attain statistical significance.
+The implementation of the attention mechanism yielded enhanced outcomes; however, this enhancement did not attain statistical significance.
 
 ![While the learning curve is not as elegant as that observed in [@fig:dense-learning-curve], it nevertheless demonstrates potential.](images/lstm_accuracy.png){#fig:lstm-attention-learning-curve width=60%}
 
