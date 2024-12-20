@@ -9,7 +9,7 @@ The results presented in [@tbl:classification-brown] highlight the impact of tex
 | Logistic Regression |      70.16% (`saga`)      |    75.46% (`saga`)     |
 | Logistic Reg. w/ CV |   **74.79%** (`lbfgs`)    | 75.74% (`sag`/`saga`)  |
 |                 SVC |      73.91% (`rbf`)       |     75.68% (`rbf`)     |
-|          Linear SVC |    67.43% (`sq_hinge`)    |    75.46% (`hinge`)    |
+|          Linear SVC |  67.43% (`square_hinge`)  |    75.46% (`hinge`)    |
 |                 SGD |    68.83% (`log_loss`)    | **76.1%** (`log_loss`) |
 |       Decision Tree |      57.25% (`gini`)      |    56.19% (`gini`)     |
 |       Random Forest |      72.87% (`gini`)      |    73.03% (`gini`)     |
@@ -23,7 +23,7 @@ The classification accuracy of various models is presented in [@tbl:classificati
 | Logistic Regression |      72.45% (`saga`)      | **78.71%** (`newton-cg`) |
 | Logistic Reg. w/ CV |     **77.3%** (`sag`)     |     78.59% (`lbfgs`)     |
 |                 SVC |      75.94% (`rbf`)       |    77.24% (`linear`)     |
-|          Linear SVC |    68.31% (`sq_hinge`)    |     78.19% (`hinge`)     |
+|          Linear SVC |  68.31% (`square_hinge`)  |     78.19% (`hinge`)     |
 |                 SGD |    70.86 (`log_loss`)     |   78.61% (`log_loss`)    |
 |       Decision Tree |      58.4% (`gini`)       |     58.24% (`gini`)      |
 |       Random Forest |      75.32% (`gini`)      |     74.61% (`gini`)      |
@@ -39,7 +39,7 @@ Other classifiers like SVC and Linear SVC showed consistent performance, with SV
 | Logistic Regression |      70.91% (`sag`)       | **77.61%** (`newton-cg`) |
 | Logistic Reg. w/ CV |    **75.18%** (`sag`)     |   76.73% (`newton-cg`)   |
 |                 SVC |      74.26% (`rbf`)       |      77.01% (`rbf`)      |
-|          Linear SVC |    67.09% (`sq_hinge`)    |     75.32% (`hinge`)     |
+|          Linear SVC |  67.09% (`square_hinge`)  |     75.32% (`hinge`)     |
 |                 SGD |    68.96% (`log_loss`)    |     77.09% (`hinge`)     |
 |       Decision Tree |      56.66% (`gini`)      |     55.86% (`gini`)      |
 |       Random Forest |      73.58% (`gini`)      |     72.97% (`gini`)      |
