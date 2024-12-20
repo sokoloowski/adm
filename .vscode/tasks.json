@@ -6,7 +6,7 @@
         {
             "label": "Create preview",
             "type": "shell",
-            "command": "(cd report && make docker-pdf)",
+            "command": "(cd report && make pdf)",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
