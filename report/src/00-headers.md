@@ -1,6 +1,6 @@
 ---
 documentclass: pprai
-title: "Three undergrads attempt data mining on Reddit: a tragic comedy" 
+title: "Text data mining: a case study of Reddit"
 author: 
 # - "Piotr Sokołowski$^{1[0009-0005-8181-6275]}$"
 - "Piotr Sokołowski$^{1}$"
@@ -21,7 +21,7 @@ header-includes:
 - \usepackage{subfig}
 - \input{pprai_proc.inc}
 - \headauthor{P. Sokołowski, M. Kosiba and M. Pałucki}
-- "\\headtitle{Three undergrads attempt data mining on Reddit: a tragic comedy}"
+- "\\headtitle{Text data mining: a case study of Reddit}"
 - |
   \affiliation{%
     $^{1,2,3}$AGH University of Krakow\\
