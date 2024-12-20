@@ -1,6 +1,9 @@
 {
     "triggerTaskOnSave.tasks": {
-        "Create preview": [
+        "Create preview (aghdpl)": [
+            "report/src/*.md", // <-- Glob pattern to specify which files should trigger the task
+        ],
+        "Create preview (pprai)": [
             "report/src/*.md", // <-- Glob pattern to specify which files should trigger the task
         ],
     }

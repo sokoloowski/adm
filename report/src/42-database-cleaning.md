@@ -10,7 +10,7 @@ Next, we aimed to further reduce the dataset size by retaining only rows with mo
 
 It is important to note that the 1,000-character threshold we applied is relatively stringent, as shown in [@fig:second-clean]. For context, X (formerly Twitter) allows posts of up to 280 characters, with the majority of tweets averaging just 34 characters long [@twitter2017]. Despite this, we chose this limit intentionally, given the highly diverse vocabulary in our dataset. Our goal was to ensure that, even after removing stopwords, the core meaning of the posts remained intact.
 
-Although not shown in [@fig:second-clean], the overall shape of the entry length distribution remained similar. A comparison of the graphs before and after cleaning is shown in [@fig:second-clean-distribution], where 100% represents the length of the longest entry. As illustrated, despite the significant reduction in entries, the general structure of the distribution stayed nearly the same.
+Although not visible in [@fig:second-clean], the overall shape of the entry length distribution remained similar. A comparison of the graphs before and after cleaning is shown in [@fig:second-clean-distribution], where 100% represents the length of the longest entry. As illustrated, despite the significant reduction in entries, the general structure of the distribution stayed nearly the same.
 
 ![Even after a comprehensive cleaning, the overall structure of the dataset remained consistent.](images/comments_count_second_clean_compare.png){#fig:second-clean-distribution width=80%}
 

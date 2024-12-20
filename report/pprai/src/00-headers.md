@@ -10,12 +10,12 @@ numberSections: true
 autoSectionLabels: true
 codeBlockCaptions: true
 bibliography:
-- src/bibliografia.bib
+- ../src/bibliografia.bib
 - from-doi.bib
 abstract: |
   The article describes the progress of a project on text data mining performed by software engineering students. The article presents information about the source of the text data, how it was acquired and cleaned. The process of selecting classifiers for categorizing posts is described, and the results of different models are compared.
 header-includes:
-- \graphicspath{{./src/}}
+- \graphicspath{{../src/}}
 - \usepackage{tikz}
 - \usepackage{txfonts}
 - \usepackage{subfig}

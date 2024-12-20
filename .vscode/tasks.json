@@ -4,9 +4,19 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Create preview",
+            "label": "Create preview (aghdpl)",
             "type": "shell",
-            "command": "(cd report && make pdf)",
+            "command": "(cd report/aghdpl && make pdf)",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Create preview (pprai)",
+            "type": "shell",
+            "command": "(cd report/pprai && make pdf)",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
